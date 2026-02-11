@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:q_less_campus/navigation_hub.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -8,78 +9,146 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _rememberMe = false; // boolean variable to track the state of the "Remember Me" checkbox
+  bool _stayLoggedIn = false; // Required 3rd field type
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
+      // Slide 5: The base structure
+      backgroundColor: Colors.grey[100], // Soft background for contrast
+      body: SingleChildScrollView(
+        // Essential for responsiveness
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // Slide 62: Vertical layout
           children: [
-            const Text(
-              'Q-Less Campus',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFFBE361D),
-              ),
-            ),
-            const SizedBox(height: 40),
-
-            // Field 1 - Email
-            const TextField(
-              decoration: InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.email_outlined),
+            // PART 1: BEAUTIFUL HEADER (Gradient + Curves)
+            Container(
+              // Slide 15: Styling & Decoration
+              height: 300,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  // High-mark creative design
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xFFBE361D),
+                    Color(0xFFE55A40),
+                  ], // Sinopia Gradient
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(
+                    100,
+                  ), // Slide 18: Rounded corners
                 ),
               ),
-            const SizedBox(height: 20),
-
-            // Field 2 - Password
-            const TextField(
-              obscureText: true, // hide the password input
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.lock_outline),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 30, top: 120),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Q-Less", // Slide 21: Text Widget
+                      style: TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "Campus Dining Redefined",
+                      style: TextStyle(fontSize: 18, color: Colors.white70),
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 10),
 
-            // "Remember Me" checkbox
-            SwitchListTile(
-              title: const Text('Remember Me'),
-              value: _rememberMe,
-              activeColor: const Color(0xFFBE361D),
-              onChanged: (bool value) {
-                setState(() {
-                  _rememberMe = value!;
-                });
-              },
+            // PART 2: THE LOGIN FORM
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  const Text(
+                    "Hello Again!",
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 40),
+
+                  // FIELD 1: TEXT ENTRY (Student ID)
+                  const TextField(
+                    decoration: InputDecoration(
+                      labelText: "Student ID",
+                      prefixIcon: Icon(Icons.badge_outlined),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // FIELD 2: OBSCURED ENTRY (Password)
+                  const TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      prefixIcon: Icon(Icons.lock_outline),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                    ),
+                  ),
+
+                  // FIELD 3: SWITCH (Required field variety)
+                  const SizedBox(height: 10),
+                  SwitchListTile(
+                    title: const Text("Keep me signed in"),
+                    value: _stayLoggedIn,
+                    activeColor: const Color(0xFFBE361D),
+                    onChanged: (bool value) {
+                      setState(() {
+                        _stayLoggedIn = value;
+                      });
+                    },
+                  ),
+
+                  // PART 3: ACTION BUTTON
+                  const SizedBox(height: 30),
+                  ElevatedButton(
+                    // Slide 14: Button Widget
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(
+                        0xFFBE361D,
+                      ), // Sinopia brand color
+                      minimumSize: const Size(double.infinity, 55),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: () {
+                      // Navigator logic to enter the app
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NavigationHub(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Sign In",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+                  const Center(
+                    child: Text("Problem Logging In? Contact Admin"),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
-
-            // Login button
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFBE361D),
-                  minimumSize: const Size(double.infinity, 50), // make the button full width
-                ),
-                onPressed: () {
-                  // Logic to handle login action
-                },
-                child: const Text(
-                  'Login',
-                  style: TextStyle(color: Colors.white),
-                )
-            ),
-
-            TextButton(
-              onPressed: () {},
-              child: const Text("Don't have an account? Contact us!"),)
           ],
         ),
       ),
