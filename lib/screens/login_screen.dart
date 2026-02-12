@@ -9,147 +9,127 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _stayLoggedIn = false; // Required 3rd field type
+  // STATE MANAGEMENT: Tracks the 'Remember me' switch.
+  // Explain in Viva: This triggers a UI rebuild via setState.
+  bool _stayLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Slide 5: The base structure
-      backgroundColor: Colors.grey[100], // Soft background for contrast
+      backgroundColor: const Color(0xFFFAFAFA), // MINIMALISM: Soft background.
       body: SingleChildScrollView(
-        // Essential for responsiveness
-        child: Column(
-          // Slide 62: Vertical layout
-          children: [
-            // PART 1: BEAUTIFUL HEADER (Gradient + Curves)
-            Container(
-              // Slide 15: Styling & Decoration
-              height: 300,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  // High-mark creative design
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFFBE361D),
-                    Color(0xFFE55A40),
-                  ], // Sinopia Gradient
-                ),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(
-                    100,
-                  ), // Slide 18: Rounded corners
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 100),
+
+              // BRANDING ACCENT: Using the new Teal color (#2596be).
+              const Center(
+                child: Icon(
+                  Icons.restaurant_rounded,
+                  size: 60,
+                  color: Color(0xFF0B1540),
                 ),
               ),
-              child: const Padding(
-                padding: EdgeInsets.only(left: 30, top: 120),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Q-Less", // Slide 21: Text Widget
-                      style: TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      "Campus Dining Redefined",
-                      style: TextStyle(fontSize: 18, color: Colors.white70),
-                    ),
-                  ],
+              const SizedBox(height: 40),
+
+              // TYPOGRAPHY: Black text for high contrast.
+              const Text(
+                "Hello There 👋",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
-            ),
-
-            // PART 2: THE LOGIN FORM
-            Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Hello Again!",
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 40),
-
-                  // FIELD 1: TEXT ENTRY (Student ID)
-                  const TextField(
-                    decoration: InputDecoration(
-                      labelText: "Student ID",
-                      prefixIcon: Icon(Icons.badge_outlined),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  // FIELD 2: OBSCURED ENTRY (Password)
-                  const TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: "Password",
-                      prefixIcon: Icon(Icons.lock_outline),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                    ),
-                  ),
-
-                  // FIELD 3: SWITCH (Required field variety)
-                  const SizedBox(height: 10),
-                  SwitchListTile(
-                    title: const Text("Keep me signed in"),
-                    value: _stayLoggedIn,
-                    activeColor: const Color(0xFFBE361D),
-                    onChanged: (bool value) {
-                      setState(() {
-                        _stayLoggedIn = value;
-                      });
-                    },
-                  ),
-
-                  // PART 3: ACTION BUTTON
-                  const SizedBox(height: 30),
-                  ElevatedButton(
-                    // Slide 14: Button Widget
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(
-                        0xFFBE361D,
-                      ), // Sinopia brand color
-                      minimumSize: const Size(double.infinity, 55),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: () {
-                      // Navigator logic to enter the app
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const NavigationHub(),
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      "Sign In",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-                  const Center(
-                    child: Text("Problem Logging In? Contact Admin"),
-                  ),
-                ],
+              const Text(
+                "Sign in to your Q-Less account",
+                style: TextStyle(color: Colors.black54),
               ),
-            ),
-          ],
+              const SizedBox(height: 40),
+
+              // FIELD 1: Student ID
+              const TextField(
+                style: TextStyle(
+                  color: Colors.black,
+                ), // Ensures input text is black.
+                decoration: InputDecoration(
+                  labelText: "Student ID",
+                  labelStyle: TextStyle(color: Colors.black54),
+                  prefixIcon: Icon(Icons.badge_outlined, color: Colors.black45),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // FIELD 2: Password
+              const TextField(
+                obscureText: true,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  labelStyle: TextStyle(color: Colors.black54),
+                  prefixIcon: Icon(Icons.lock_outline, color: Colors.black45),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 10),
+              // FIELD 3: Switch (Variety requirement)
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text(
+                  "Remember me",
+                  style: TextStyle(fontSize: 14, color: Colors.black),
+                ),
+                value: _stayLoggedIn,
+                activeColor: const Color(0xFF0B1540), // Updated color.
+                onChanged: (val) => setState(() => _stayLoggedIn = val),
+              ),
+
+              const SizedBox(height: 30),
+
+              // PRIMARY ACTION: The button with the new #2596be color.
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF0B1540),
+                  minimumSize: const Size(double.infinity, 60),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  elevation: 0,
+                ),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NavigationHub(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Sign In",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

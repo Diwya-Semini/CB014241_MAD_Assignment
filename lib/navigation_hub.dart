@@ -8,27 +8,46 @@ class NavigationHub extends StatefulWidget {
 }
 
 class _NavigationHubState extends State<NavigationHub> {
+  // STATE: Tracks which screen is currently visible.
   int _currentIndex = 0;
 
-  // These are the 4 core screens required for an "Excellent" grade
+  // SCREENS: The main areas of your student canteen app.
   final List<Widget> _pages = [
-    // const MenuScreen(),
-    // const Center(child: Text("Cart Screen")),
-    // const Center(child: Text("My Orders")),
-    // const Center(child: Text("Profile Settings")),
+    const Center(
+      child: Text("Menu Screen", style: TextStyle(color: Colors.black)),
+    ),
+    const Center(
+      child: Text("Cart Screen", style: TextStyle(color: Colors.black)),
+    ),
+    const Center(
+      child: Text("My Orders", style: TextStyle(color: Colors.black)),
+    ),
+    const Center(
+      child: Text("Profile", style: TextStyle(color: Colors.black)),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // The foundation widget [cite: 5]
-      body: _pages[_currentIndex], // Changes based on selection
+      body: _pages[_currentIndex], // Updates dynamically based on selection.
+
       bottomNavigationBar: BottomNavigationBar(
-        // Switching bar
         currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
+
+        // INTERACTION: Updates the UI state when a student taps a tab.
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index; // Triggers a rebuild of the body.
+          });
+        },
+
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFFBE361D), // Sinopia brand color
+        selectedItemColor: const Color(
+          0xFF0B1540,
+        ), // ACTIVE COLOR: Your new teal.
+        unselectedItemColor: Colors.black45, // INACTIVE COLOR: Soft black/grey.
+
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.restaurant_menu),

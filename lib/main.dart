@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:q_less_campus/screens/login_screen.dart';
+import 'package:q_less_campus/screens/spalsh_screen.dart';
 
 void main() {
   runApp(const QLessApp());
@@ -11,29 +11,44 @@ class QLessApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Q-Less Campus',
       debugShowCheckedModeBanner: false,
+      title: 'Q-Less Campus',
 
-      //ligh theme
+      // 1. LIGHT THEME: Used when the phone is in Light Mode
       theme: ThemeData(
         useMaterial3: true,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 0, 0, 0),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFBE361D),
+          seedColor: const Color(0xFF2596BE), // Your chosen Teal color
           brightness: Brightness.light,
-        )
+        ),
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: Colors.black),
+          bodyMedium: TextStyle(color: Colors.black),
+        ),
       ),
 
-      //dark theme
+      // 2. DARK THEME: Added this so the app knows what to do in Dark Mode
       darkTheme: ThemeData(
         useMaterial3: true,
+        scaffoldBackgroundColor: const Color(
+          0xFF121212,
+        ), // Standard dark background
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFBE361D),
-          brightness: Brightness.dark,
-        )
+          seedColor: const Color(0xFF2596BE),
+          brightness:
+              Brightness.dark, // Crucial: Tells Flutter to use dark tones
+        ),
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: Colors.white), // White text for dark mode
+          bodyMedium: TextStyle(color: Colors.white),
+        ),
       ),
 
-      themeMode: ThemeMode.system, //automatically switch between light and dark theme based on phone settings
-      home: const LoginScreen(),
+      // 3. THEME MODE: This command tells the app to follow the system settings
+      themeMode: ThemeMode.system,
+
+      home: const SplashScreen(),
     );
   }
 }
