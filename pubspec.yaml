@@ -55,8 +55,7 @@ flutter:
   # Ensure there are exactly 2 spaces before 'assets'
   assets:
     # Ensure there are exactly 4 spaces before the dash
-    - assets/images/
-
+    - assets/images
   # Exactly 2 spaces before 'assets'
   # assets:
     # Exactly 4 spaces before the dash

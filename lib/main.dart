@@ -10,35 +10,47 @@ class QLessApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const brandNavy = Color(0xFF050D2E);
+    // Brand colors
+    const Color brandOrange = Color(0xFFD35400);
+    const Color deepCharcoal = Color.fromARGB(255, 15, 15, 15);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Q-Less Campus',
 
-      // light theme
+      // Light theme
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: brandNavy,
+          seedColor: brandOrange,
           brightness: Brightness.light,
-          primary: brandNavy, // Navy buttons/icons in light mode
+          primary: brandOrange,
         ),
       ),
 
       // dark theme
       darkTheme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFF0A0F1E), // A very dark navy
+        scaffoldBackgroundColor: deepCharcoal,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: brandNavy,
+          seedColor: brandOrange,
           brightness: Brightness.dark,
-          primary: Colors.white, // White buttons/icons in dark mode
+          primary: brandOrange,
+          surface: const Color(0xFF1E1E1E), // grey for cards
+          onSurface: Colors.white,
+        ),
+        // Ensuring navigation bars match the black background
+        navigationRailTheme: const NavigationRailThemeData(
+          backgroundColor: deepCharcoal,
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: deepCharcoal,
         ),
       ),
 
-      themeMode: ThemeMode.system, // Auto switches according to phone settings
+      // check system theme and adapt accordingly
+      themeMode: ThemeMode.system,
       home: const SplashScreen(),
     );
   }

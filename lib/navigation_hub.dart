@@ -9,74 +9,139 @@ class NavigationHub extends StatefulWidget {
 }
 
 class _NavigationHubState extends State<NavigationHub> {
-  // tracks which tab is currently active.
-  // index determines which widget is pulled from the _pages list.
+  // Track the currently selected page index for navigation
   int _currentIndex = 0;
+
+  // screes list for navigation
+  final List<Widget> _pages = [
+    const MenuScreen(),
+    const Center(child: Text("Cart Screen")),
+    const Center(child: Text("Profile Screen")),
+    const Center(child: Text("Orders Screen")),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    // system theme check for dynamic coloring
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    const Color brandNavy = Color(0xFF050D2E);
 
-    // list of screens corresponding to each BottomNavigationBar tab
-    final List<Widget> _pages = [
-      const MenuScreen(),
-      Center(
-        child: Text(
-          "Cart Screen",
-          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+    // LayoutBuilder - adapt navigation style based on screen width
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // landscape split view with side nav
+        if (constraints.maxWidth > 600) {
+          return Scaffold(
+            body: Row(
+              children: [
+                Expanded(child: _pages[_currentIndex]),
+                _buildLandscapeNav(isDark, brandNavy),
+              ],
+            ),
+          );
+        }
+        // potrait with bottom nav
+        else {
+          return Scaffold(
+            body: _pages[_currentIndex],
+            bottomNavigationBar: _buildPortraitNav(isDark, brandNavy),
+          );
+        }
+      },
+    );
+  }
+
+  // landcape nav bar
+  Widget _buildLandscapeNav(bool isDark, Color navy) {
+    return Container(
+      width: 90,
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF121212) : Colors.white,
+        border: Border(
+          left: BorderSide(color: Colors.grey.withValues(alpha: 0.1)),
         ),
       ),
-      Center(
-        child: Text(
-          "My Orders",
-          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+      child: NavigationRail(
+        selectedIndex: _currentIndex,
+        // Update selected index on tap
+        onDestinationSelected: (index) => setState(() => _currentIndex = index),
+        labelType: NavigationRailLabelType.all,
+        backgroundColor: Colors.transparent,
+        // Active indicator styling
+        indicatorColor: navy.withValues(alpha: 0.1),
+        selectedIconTheme: IconThemeData(
+          color: isDark ? Colors.white : navy,
+          size: 28,
         ),
-      ),
-      Center(
-        child: Text(
-          "Profile",
-          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+        unselectedIconTheme: const IconThemeData(
+          color: Color(0xFF4C4C4C),
+          size: 24,
         ),
+        // Spreading items: Use groupAlignment to push them apart
+        groupAlignment: 0.0,
+        destinations: const [
+          NavigationRailDestination(
+            icon: Icon(Icons.restaurant_menu_rounded),
+            label: Text("Menu"),
+          ),
+          NavigationRailDestination(
+            icon: Icon(Icons.shopping_cart_outlined),
+            label: Text("Cart"),
+          ),
+          NavigationRailDestination(
+            icon: Icon(Icons.receipt_long_outlined),
+            label: Text("Orders"),
+          ),
+          NavigationRailDestination(
+            icon: Icon(Icons.person_outline_rounded),
+            label: Text("Profile"),
+          ),
+        ],
       ),
-    ];
+    );
+  }
 
-    return Scaffold(
-      // Displays the widget corresponding to the current BottomNavigationBar index
-      body: _pages[_currentIndex],
-
-      bottomNavigationBar: BottomNavigationBar(
+  // potrait nav bar
+  Widget _buildPortraitNav(bool isDark, Color navy) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF121212) : Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, -5),
+          ),
+        ],
+      ),
+      child: BottomNavigationBar(
         currentIndex: _currentIndex,
-        // Updates the screen when a new tab is tapped
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-
+        // Update selected index on tap
+        onTap: (index) => setState(() => _currentIndex = index),
         type: BottomNavigationBarType.fixed,
-
-        // Adaptive Color
-        selectedItemColor: Theme.of(context).colorScheme.primary,
-
-        // Sets unselected icons to a visible
-        unselectedItemColor: isDark ? Colors.white60 : Colors.black45,
-
-        // Respects the Black or White background of the theme
-        backgroundColor: isDark ? const Color(0xFF121212) : Colors.white,
-
-        // screen navigation
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        selectedItemColor: isDark ? Colors.white : navy,
+        unselectedItemColor: const Color(0xFF4C4C4C),
+        selectedFontSize: 12,
+        unselectedFontSize: 12,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.restaurant_menu),
+            icon: Icon(Icons.restaurant_menu_rounded),
             label: 'Menu',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.shopping_cart_outlined),
             label: 'Cart',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Orders'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_long_outlined),
+            label: 'Orders',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline_rounded),
+            label: 'Profile',
+          ),
         ],
       ),
     );
