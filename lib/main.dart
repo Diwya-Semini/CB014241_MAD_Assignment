@@ -16,29 +16,29 @@ class QLessApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Q-Less Campus',
 
-      // LIGHT THEME: White background with Navy accents
+      // light theme
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSeed(
           seedColor: brandNavy,
           brightness: Brightness.light,
-          primary: brandNavy, // Navy buttons/icons in Light Mode
+          primary: brandNavy, // Navy buttons/icons in light mode
         ),
       ),
 
-      // DARK THEME: Deep Navy/Black background with White accents
+      // dark theme
       darkTheme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFF0A0F1E), // A very dark navy
         colorScheme: ColorScheme.fromSeed(
           seedColor: brandNavy,
           brightness: Brightness.dark,
-          primary: Colors.white, // White buttons/icons in Dark Mode so they are visible!
+          primary: Colors.white, // White buttons/icons in dark mode
         ),
       ),
 
-      themeMode: ThemeMode.system, // Auto-switches based on phone settings
+      themeMode: ThemeMode.system, // Auto switches according to phone settings
       home: const SplashScreen(),
     );
   }

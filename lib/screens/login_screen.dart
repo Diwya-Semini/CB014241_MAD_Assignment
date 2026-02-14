@@ -9,12 +9,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _stayLoggedIn = false;
+  bool _stayLoggedIn = false; // track remind me toggle
 
   @override
   Widget build(BuildContext context) {
-    final Color adaptiveColor = Theme.of(context).colorScheme.primary;
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final Color adaptiveColor = Theme.of(
+      context,
+    ).colorScheme.primary; // change colors of icons and text based on theme
+    final bool isDark =
+        Theme.of(context).brightness ==
+        Brightness
+            .dark; // Check if current theme is dark for change colors of input fields and buttons
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -26,12 +31,12 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 100),
               Center(
                 child: Icon(
-                  Icons.login_outlined,
-                  size: 80,
+                  Icons.food_bank_outlined,
+                  size: 100,
                   color: adaptiveColor,
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 30),
               Text(
                 "Welcome Back!",
                 style: TextStyle(
@@ -46,16 +51,16 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 40),
 
-              // INPUT FIELDS: Rounded and subtle
+              // input field - Email
               TextField(
                 decoration: InputDecoration(
-                  labelText: "Student ID",
-                  prefixIcon: const Icon(Icons.badge_outlined),
+                  labelText: "Email",
+                  prefixIcon: const Icon(Icons.email_outlined),
                   filled: true,
                   fillColor: isDark ? Colors.white10 : const Color(0xFFF5F5F5),
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
               ),
@@ -64,16 +69,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: "Password",
-                  prefixIcon: const Icon(Icons.lock_outline),
+                  prefixIcon: const Icon(Icons.lock_outline_rounded),
                   filled: true,
                   fillColor: isDark ? Colors.white10 : const Color(0xFFF5F5F5),
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
               ),
 
+              // remember me toggle
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text(
@@ -90,18 +96,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isDark
                       ? Colors.white
-                      : const Color(
-                          0xFF050D2E,
-                        ), // White in dark mode for visibility
+                      : const Color(0xFF050D2E), // White in dark mode
                   foregroundColor: isDark
                       ? const Color(0xFF050D2E)
                       : Colors.white,
                   minimumSize: const Size(double.infinity, 60),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(50),
                   ),
                   elevation: 0,
                 ),
+                // on press -> navigate to the main navigation hub
                 onPressed: () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:q_less_campus/screens/menu_screen.dart';
 
 class NavigationHub extends StatefulWidget {
   const NavigationHub({super.key});
@@ -8,46 +9,63 @@ class NavigationHub extends StatefulWidget {
 }
 
 class _NavigationHubState extends State<NavigationHub> {
-  // STATE: Tracks which screen is currently visible.
+  // tracks which tab is currently active.
+  // index determines which widget is pulled from the _pages list.
   int _currentIndex = 0;
-
-  // SCREENS: The main areas of your student canteen app.
-  final List<Widget> _pages = [
-    const Center(
-      child: Text("Menu Screen", style: TextStyle(color: Colors.black)),
-    ),
-    const Center(
-      child: Text("Cart Screen", style: TextStyle(color: Colors.black)),
-    ),
-    const Center(
-      child: Text("My Orders", style: TextStyle(color: Colors.black)),
-    ),
-    const Center(
-      child: Text("Profile", style: TextStyle(color: Colors.black)),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    // system theme check for dynamic coloring
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
+    // list of screens corresponding to each BottomNavigationBar tab
+    final List<Widget> _pages = [
+      const MenuScreen(),
+      Center(
+        child: Text(
+          "Cart Screen",
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+        ),
+      ),
+      Center(
+        child: Text(
+          "My Orders",
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+        ),
+      ),
+      Center(
+        child: Text(
+          "Profile",
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+        ),
+      ),
+    ];
+
     return Scaffold(
-      body: _pages[_currentIndex], // Updates dynamically based on selection.
+      // Displays the widget corresponding to the current BottomNavigationBar index
+      body: _pages[_currentIndex],
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-
-        // INTERACTION: Updates the UI state when a student taps a tab.
+        // Updates the screen when a new tab is tapped
         onTap: (index) {
           setState(() {
-            _currentIndex = index; // Triggers a rebuild of the body.
+            _currentIndex = index;
           });
         },
 
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(
-          0xFF0B1540,
-        ), // ACTIVE COLOR: Your new teal.
-        unselectedItemColor: Colors.black45, // INACTIVE COLOR: Soft black/grey.
 
+        // Adaptive Color
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+
+        // Sets unselected icons to a visible
+        unselectedItemColor: isDark ? Colors.white60 : Colors.black45,
+
+        // Respects the Black or White background of the theme
+        backgroundColor: isDark ? const Color(0xFF121212) : Colors.white,
+
+        // screen navigation
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.restaurant_menu),
