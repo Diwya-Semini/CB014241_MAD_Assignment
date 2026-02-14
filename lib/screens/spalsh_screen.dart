@@ -10,14 +10,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // LIFECYCLE: initState runs once when the app starts.
   @override
   void initState() {
     super.initState();
-
-    // TIMER: Creates a 3-second delay to show the brand identity.
     Timer(const Duration(seconds: 3), () {
-      // NAVIGATION: Replaces the splash screen so the user can't go 'back' to it.
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -27,30 +23,27 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      // BRANDING: Using the new Teal (#2596BE) for a professional look.
-      backgroundColor: Color(0xFF0B1540),
+    // This variable automatically picks Navy in Light and White in Dark mode
+    final Color adaptiveColor = Theme.of(context).colorScheme.primary;
+
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // ICON: Using white here for high contrast against the teal background.
-            Icon(Icons.restaurant_rounded, size: 80, color: Colors.white),
-            SizedBox(height: 20),
-
+            Icon(Icons.food_bank_outlined, size: 100, color: adaptiveColor),
+            const SizedBox(height: 20),
             Text(
               "Q-LESS",
               style: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: 2.5,
+                color: adaptiveColor,
+                letterSpacing: 3,
               ),
             ),
-            SizedBox(height: 30),
-
-            // DYNAMIC ELEMENT: Shows the user the app is initializing.
-            CircularProgressIndicator(color: Colors.white),
+            const SizedBox(height: 30),
+            CircularProgressIndicator(color: adaptiveColor),
           ],
         ),
       ),

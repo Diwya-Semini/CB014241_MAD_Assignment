@@ -9,123 +9,108 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // STATE MANAGEMENT: Tracks the 'Remember me' switch.
-  // Explain in Viva: This triggers a UI rebuild via setState.
   bool _stayLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
+    final Color adaptiveColor = Theme.of(context).colorScheme.primary;
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFFAFAFA), // MINIMALISM: Soft background.
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 100),
-
-              // BRANDING ACCENT: Using the new Teal color (#2596be).
-              const Center(
+              Center(
                 child: Icon(
-                  Icons.restaurant_rounded,
-                  size: 60,
-                  color: Color(0xFF0B1540),
+                  Icons.login_outlined,
+                  size: 80,
+                  color: adaptiveColor,
                 ),
               ),
               const SizedBox(height: 40),
-
-              // TYPOGRAPHY: Black text for high contrast.
-              const Text(
-                "Hello There 👋",
+              Text(
+                "Welcome Back!",
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: adaptiveColor,
                 ),
               ),
               const Text(
-                "Sign in to your Q-Less account",
-                style: TextStyle(color: Colors.black54),
+                "Sign in to your qless account to continue",
+                style: TextStyle(color: Colors.grey),
               ),
               const SizedBox(height: 40),
 
-              // FIELD 1: Student ID
-              const TextField(
-                style: TextStyle(
-                  color: Colors.black,
-                ), // Ensures input text is black.
+              // INPUT FIELDS: Rounded and subtle
+              TextField(
                 decoration: InputDecoration(
                   labelText: "Student ID",
-                  labelStyle: TextStyle(color: Colors.black54),
-                  prefixIcon: Icon(Icons.badge_outlined, color: Colors.black45),
+                  prefixIcon: const Icon(Icons.badge_outlined),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: isDark ? Colors.white10 : const Color(0xFFF5F5F5),
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-
-              // FIELD 2: Password
-              const TextField(
+              TextField(
                 obscureText: true,
-                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   labelText: "Password",
-                  labelStyle: TextStyle(color: Colors.black54),
-                  prefixIcon: Icon(Icons.lock_outline, color: Colors.black45),
+                  prefixIcon: const Icon(Icons.lock_outline),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: isDark ? Colors.white10 : const Color(0xFFF5F5F5),
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
               ),
 
-              const SizedBox(height: 10),
-              // FIELD 3: Switch (Variety requirement)
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text(
                   "Remember me",
-                  style: TextStyle(fontSize: 14, color: Colors.black),
+                  style: TextStyle(fontSize: 14),
                 ),
                 value: _stayLoggedIn,
-                activeColor: const Color(0xFF0B1540), // Updated color.
+                activeColor: adaptiveColor,
                 onChanged: (val) => setState(() => _stayLoggedIn = val),
               ),
 
               const SizedBox(height: 30),
-
-              // PRIMARY ACTION: The button with the new #2596be color.
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF0B1540),
+                  backgroundColor: isDark
+                      ? Colors.white
+                      : const Color(
+                          0xFF050D2E,
+                        ), // White in dark mode for visibility
+                  foregroundColor: isDark
+                      ? const Color(0xFF050D2E)
+                      : Colors.white,
                   minimumSize: const Size(double.infinity, 60),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   elevation: 0,
                 ),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NavigationHub(),
-                    ),
-                  );
-                },
+                onPressed: () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NavigationHub(),
+                  ),
+                ),
                 child: const Text(
                   "Sign In",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

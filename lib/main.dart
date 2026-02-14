@@ -10,44 +10,35 @@ class QLessApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const brandNavy = Color(0xFF050D2E);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Q-Less Campus',
 
-      // 1. LIGHT THEME: Used when the phone is in Light Mode
+      // LIGHT THEME: White background with Navy accents
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF2596BE), // Your chosen Teal color
+          seedColor: brandNavy,
           brightness: Brightness.light,
-        ),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.black),
-          bodyMedium: TextStyle(color: Colors.black),
+          primary: brandNavy, // Navy buttons/icons in Light Mode
         ),
       ),
 
-      // 2. DARK THEME: Added this so the app knows what to do in Dark Mode
+      // DARK THEME: Deep Navy/Black background with White accents
       darkTheme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: const Color(
-          0xFF121212,
-        ), // Standard dark background
+        scaffoldBackgroundColor: const Color(0xFF0A0F1E), // A very dark navy
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF2596BE),
-          brightness:
-              Brightness.dark, // Crucial: Tells Flutter to use dark tones
-        ),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.white), // White text for dark mode
-          bodyMedium: TextStyle(color: Colors.white),
+          seedColor: brandNavy,
+          brightness: Brightness.dark,
+          primary: Colors.white, // White buttons/icons in Dark Mode so they are visible!
         ),
       ),
 
-      // 3. THEME MODE: This command tells the app to follow the system settings
-      themeMode: ThemeMode.system,
-
+      themeMode: ThemeMode.system, // Auto-switches based on phone settings
       home: const SplashScreen(),
     );
   }
