@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:q_less_campus/screens/cart_screen.dart';
 import 'package:q_less_campus/screens/menu_screen.dart';
 
 class NavigationHub extends StatefulWidget {
@@ -15,7 +16,7 @@ class _NavigationHubState extends State<NavigationHub> {
   // screes list for navigation
   final List<Widget> _pages = [
     const MenuScreen(),
-    const Center(child: Text("Cart Screen")),
+    const CartScreen(),
     const Center(child: Text("Profile Screen")),
     const Center(child: Text("Orders Screen")),
   ];
