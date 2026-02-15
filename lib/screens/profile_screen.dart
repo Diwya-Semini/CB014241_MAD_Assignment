@@ -5,22 +5,28 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // theme and color setup
     final theme = Theme.of(context);
     final bool isDark = theme.brightness == Brightness.dark;
     final Color orange = theme.colorScheme.primary;
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: isDark
+            ? const Color.fromARGB(255, 30, 30, 30)
+            : Colors.white,
         title: const Text(
           "Student Profile",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        centerTitle: true,
       ),
-      // LayoutBuilder ensures no overflow and handles iPad/Landscape views
+
+      // LayoutBuilder for no overflow
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (constraints.maxWidth > 600) {
-            // LANDSCAPE / IPAD VIEW: Two-Pane Split
+            // landscape - two splits
             return Row(
               children: [
                 Expanded(flex: 2, child: _buildProfileHeader(orange)),
@@ -29,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
               ],
             );
           } else {
-            // PORTRAIT VIEW: Single Column
+            // potrait - single scroll view
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -44,7 +50,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // --- 1. PROFILE HEADER: Appropriate Student Content ---
+  // profile header with avatar and name
   Widget _buildProfileHeader(Color orange) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30),
@@ -52,8 +58,9 @@ class ProfileScreen extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 50,
-            backgroundColor: orange.withValues(alpha: 0.1),
-            child: Icon(Icons.person, size: 50, color: orange),
+            backgroundImage: NetworkImage(
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdylxLhRufslAQAarJ-Hwy_8b3gmBuIk8PAQ&s",
+            ),
           ),
           const SizedBox(height: 15),
           const Text(
@@ -61,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const Text(
-            "Software Engineering Student", // Relevant role
+            "APIIT - Union Place Main Canteen", // Relevant role
             style: TextStyle(color: Colors.grey),
           ),
         ],
@@ -69,9 +76,9 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // --- 2. SETTINGS LIST: Minimalist and Functional ---
+  // settings list
   Widget _buildSettingsList(bool isDark) {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
@@ -101,23 +108,32 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
+  // combined profile header and settings list for landscape mode
   Widget _buildProfileTile(
     IconData icon,
     String title,
     String subtitle, {
     bool isDestructive = false,
   }) {
+    // logout tile with red color
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      elevation: 0, // Keeps it minimalist
+      elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: ListTile(
-        leading: Icon(icon, color: isDestructive ? Colors.red : Colors.black87),
+        leading: Icon(
+          icon,
+          color: isDestructive
+              ? Colors.red
+              : const Color.fromARGB(221, 215, 63, 2),
+        ),
         title: Text(
           title,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: isDestructive ? Colors.red : Colors.black87,
+            color: isDestructive
+                ? Colors.red
+                : const Color.fromARGB(221, 215, 63, 2),
           ),
         ),
         subtitle: Text(subtitle, style: const TextStyle(fontSize: 12)),
