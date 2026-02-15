@@ -8,10 +8,10 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  // Selected pickup time state
+  // set the default pickup time to 12:15 PM for the chips selection
   String selectedTime = "12:15 PM";
 
-  // Checkout items list
+  // checkout item list
   final List<Map<String, dynamic>> cartItems = [
     {
       "name": "Fried Rice",
@@ -37,25 +37,33 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        title: const Text("Cart", style: TextStyle(fontSize: 24)),
+        // Matches the clean AppBar style from OrdersScreen
+        backgroundColor: isDark
+            ? const Color.fromARGB(255, 30, 30, 30)
+            : Colors.white,
+        title: const Text(
+          "Cart",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
+        elevation: 0,
       ),
-      // LayoutBuilder - adapt the layout based on screen width
       body: Container(
-        color: isDark ? Colors.black : const Color.fromARGB(255, 235, 235, 235),
+        // Updated to match the specific 0xFFF5F5F5 gray from OrdersScreen
+        color: isDark ? Colors.black : const Color(0xFFF5F5F5),
+        // LayoutBuilder - adapt the layout based on screen width
         child: LayoutBuilder(
           builder: (context, constraints) {
-            // If the screen is wider than 600px, show the two panle
+            // If the screen is wider than 600px show the two panle
             if (constraints.maxWidth > 600) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Left panle: Cart
+                  // Left panle - Cart
                   Expanded(flex: 3, child: _buildCartList(isDark, orange)),
                   const VerticalDivider(width: 1),
-                  // right panle: Checkout
-                  // Added height: double.infinity in the helper to fill the iPad sidebar view
+                  // right panle - Checkout
+                  // Added height: because the ipad checkout is half the screen height
                   Expanded(
                     flex: 2,
                     child: _buildCheckoutPanel(
@@ -92,7 +100,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget _buildCartList(bool isDark, Color orange) {
     // screen for the list of items in the cart
     return ListView.builder(
-      // 15 pixle gap between items and padding around the list
+      // gap between items and padding around the list
       padding: const EdgeInsets.all(15),
       itemCount: cartItems.length,
       itemBuilder: (context, index) {
@@ -171,19 +179,15 @@ class _CartScreenState extends State<CartScreen> {
     return Container(
       // Ensure the white background fills the entire vertical height in landscape mode
       height: isLandscape ? double.infinity : null,
-      // contailer - pickup details, payment method and checkout button
+      // contailer - pickup details, payment method, checkout button
       decoration: BoxDecoration(
-        color: isDark
-            ? const Color(0xFF1E1E1E)
-            : Colors.white, // Adapts to theme
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(30), // Professional rounded top corners
-        ),
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
-            offset: const Offset(0, -5), // Shadow at top to give "lift"
+            offset: const Offset(0, -5),
           ),
         ],
       ),
@@ -284,7 +288,7 @@ class _CartScreenState extends State<CartScreen> {
 
             // total and checkout button
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               decoration: BoxDecoration(
                 color: orange,
                 borderRadius: BorderRadius.circular(30),
@@ -292,7 +296,7 @@ class _CartScreenState extends State<CartScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Left side - Total amount
+                  // total amount
                   Row(
                     children: const [
                       Text(
@@ -314,11 +318,11 @@ class _CartScreenState extends State<CartScreen> {
                     ],
                   ),
 
-                  // Right side: Checkout button
+                  // checkout button
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      foregroundColor: Colors.black, // Black text color
+                      foregroundColor: Colors.black,
                       elevation: 0,
                       shape: const StadiumBorder(), // rounded button shape
                       padding: const EdgeInsets.symmetric(
