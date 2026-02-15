@@ -31,7 +31,7 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Expanded(flex: 2, child: _buildProfileHeader(orange)),
                 const VerticalDivider(width: 1),
-                Expanded(flex: 3, child: _buildSettingsList(isDark)),
+                Expanded(flex: 3, child: _buildSettingsList(context, isDark)),
               ],
             );
           } else {
@@ -40,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 children: [
                   _buildProfileHeader(orange),
-                  _buildSettingsList(isDark),
+                  _buildSettingsList(context, isDark),
                 ],
               ),
             );
@@ -68,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const Text(
-            "APIIT - Union Place Main Canteen", // Relevant role
+            "APIIT - Union Place Main Canteen", // canteen name
             style: TextStyle(color: Colors.grey),
           ),
         ],
@@ -77,27 +77,31 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // settings list
-  Widget _buildSettingsList(bool isDark) {
+  Widget _buildSettingsList(BuildContext context, bool isDark) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           _buildProfileTile(
+            context,
             Icons.shopping_bag_outlined,
             "Order History",
             "Track your current meals",
           ),
           _buildProfileTile(
+            context,
             Icons.notifications_none,
             "Notifications",
             "Pickup alerts and news",
           ),
           _buildProfileTile(
+            context,
             Icons.info_outline,
             "About Q-Less",
             "Version 1.0.0 (Beta)",
           ),
           _buildProfileTile(
+            context,
             Icons.logout,
             "Logout",
             "Exit the application",
@@ -110,6 +114,7 @@ class ProfileScreen extends StatelessWidget {
 
   // combined profile header and settings list for landscape mode
   Widget _buildProfileTile(
+    BuildContext context,
     IconData icon,
     String title,
     String subtitle, {
@@ -138,8 +143,41 @@ class ProfileScreen extends StatelessWidget {
         ),
         subtitle: Text(subtitle, style: const TextStyle(fontSize: 12)),
         trailing: const Icon(Icons.chevron_right, size: 20),
-        onTap: () {},
+        onTap: () {
+          // dialog pop for the Logout tile
+          if (isDestructive) {
+            _showLogoutDialog(context);
+          }
+        },
       ),
+    );
+  }
+
+  // log out dialog functionality
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text("Logout"),
+          content: const Text("Are you sure you want to exit the Q-Less app?"),
+          actions: [
+            TextButton(
+              child: const Text("Cancel"),
+              onPressed: () => Navigator.pop(context), // Closes dialog
+            ),
+            TextButton(
+              child: const Text("Logout", style: TextStyle(color: Colors.red)),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
