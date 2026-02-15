@@ -15,7 +15,7 @@ class _NavigationHubState extends State<NavigationHub> {
   // Track the currently selected page index for navigation
   int _currentIndex = 0;
 
-  // screes list for navigation
+  // screens list for navigation
   final List<Widget> _pages = [
     const MenuScreen(),
     const CartScreen(),
@@ -69,7 +69,7 @@ class _NavigationHubState extends State<NavigationHub> {
         onDestinationSelected: (index) => setState(() => _currentIndex = index),
         labelType: NavigationRailLabelType.all,
         backgroundColor: Colors.transparent,
-        // Active indicator styling
+        // Active tab styling
         indicatorColor: navy.withValues(alpha: 0.1),
         selectedIconTheme: IconThemeData(
           color: isDark ? Colors.white : navy,

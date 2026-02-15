@@ -37,7 +37,6 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        // Matches the clean AppBar style from OrdersScreen
         backgroundColor: isDark
             ? const Color.fromARGB(255, 30, 30, 30)
             : Colors.white,
@@ -49,7 +48,6 @@ class _CartScreenState extends State<CartScreen> {
         elevation: 0,
       ),
       body: Container(
-        // Updated to match the specific 0xFFF5F5F5 gray from OrdersScreen
         color: isDark ? Colors.black : const Color(0xFFF5F5F5),
         // LayoutBuilder - adapt the layout based on screen width
         child: LayoutBuilder(
@@ -59,7 +57,7 @@ class _CartScreenState extends State<CartScreen> {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Left panle - Cart
+                  // left panle - Cart
                   Expanded(flex: 3, child: _buildCartList(isDark, orange)),
                   const VerticalDivider(width: 1),
                   // right panle - Checkout
@@ -79,7 +77,7 @@ class _CartScreenState extends State<CartScreen> {
               return Column(
                 children: [
                   Expanded(child: _buildCartList(isDark, orange)),
-                  // Wrapped in Flexible to prevent the 41-pixel bottom overflow
+                  // Wrapped in Flexible to prevent overflow
                   Flexible(
                     child: _buildCheckoutPanel(
                       isDark,
@@ -177,7 +175,7 @@ class _CartScreenState extends State<CartScreen> {
     bool isLandscape = false,
   }) {
     return Container(
-      // Ensure the white background fills the entire vertical height in landscape mode
+      // make sure the background fills the entire vertical height in landscape mode
       height: isLandscape ? double.infinity : null,
       // contailer - pickup details, payment method, checkout button
       decoration: BoxDecoration(
@@ -260,7 +258,6 @@ class _CartScreenState extends State<CartScreen> {
             ),
             const SizedBox(height: 5),
 
-            // Payment Dropdown
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
